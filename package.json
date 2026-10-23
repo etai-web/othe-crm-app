@@ -1,0 +1,17 @@
+{
+  "name": "othe-crm-app",
+  "version": "1.1.0",
+  "private": true,
+  "description": "OTHE CRM technician app (Android shell for the On Time Home Experts CRM, with Stripe Tap to Pay)",
+  "scripts": {
+    "android:prepare": "npx cap add android && node scripts/prepare-android.mjs && npx cap sync android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/app": "^8.0.0",
+    "@capacitor/core": "^8.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.0.0"
+  }
+}

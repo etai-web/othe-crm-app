@@ -1,0 +1,25 @@
+{
+  "appId": "com.othe.crm",
+  "appName": "OTHE CRM",
+  "webDir": "www",
+  "server": {
+    "url": "https://ontimehomexpertscrm.com",
+    "cleartext": false,
+    "allowNavigation": [
+      "ontimehomexpertscrm.com",
+      "*.ontimehomexpertscrm.com",
+      "lead-dispatch-flow.base44.app",
+      "base44.app",
+      "*.base44.app",
+      "base44.com",
+      "*.base44.com",
+      "appleid.apple.com",
+      "login.microsoftonline.com",
+      "login.live.com"
+    ]
+  },
+  "android": {
+    "allowMixedContent": false,
+    "backgroundColor": "#ffffff"
+  }
+}
