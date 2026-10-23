@@ -23,8 +23,11 @@ Every push to `main` runs **Actions → Build Android APK**, which:
 
 1. installs Capacitor 8 and generates a fresh Android project (`npx cap add android`),
 2. applies everything in `native-overrides/` with `scripts/prepare-android.mjs`,
-3. builds the APK, signs it with the permanent OTHE key, and publishes it as a new
-   **Release** (`v1.1.<run number>`).
+3. builds the APK and signs it with the permanent OTHE key (checked automatically).
+
+A new **Release** (`v1.1.<run number>`) is published only when the commit message contains
+`[release]`, or when the workflow is started by hand (**Actions → Build Android APK → Run workflow**).
+Other builds keep the APK as a downloadable artifact on the run.
 
 No Android Studio is needed. If the signing-key secrets are missing, the APK is only kept as a
 build artifact (signed with a temporary key) and **no release is published**.
