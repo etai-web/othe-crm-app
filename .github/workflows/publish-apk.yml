@@ -1,0 +1,41 @@
+name: Publish signed APK
+
+# Publishes an APK that was signed outside GitHub (with the permanent OTHE key) and committed
+# to dist/. Used for releases built before the signing-key secrets were added.
+
+on:
+  push:
+    branches: [main]
+    paths: ['dist/*.apk']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Remove the old test release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release delete android-1.1.1 --cleanup-tag --yes || true
+
+      - name: Publish dist APK as the latest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          apk=$(ls dist/OTHE-CRM-*.apk | sort -V | tail -1)
+          ver=$(basename "$apk" .apk | sed 's/^OTHE-CRM-//')
+          tag="v$ver"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "$apk" --clobber
+          else
+            gh release create "$tag" "$apk" \
+              --target "$GITHUB_SHA" \
+              --latest \
+              --title "OTHE CRM Android $ver" \
+              --notes-file .github/release-notes/$ver.md
+          fi

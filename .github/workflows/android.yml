@@ -2,7 +2,7 @@ name: Build Android APK
 
 on:
   push:
-    branches: [main, android-rebuild]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -68,13 +68,15 @@ jobs:
           name: ${{ steps.apk.outputs.name }}
           path: ${{ steps.apk.outputs.name }}
 
+      # Only builds signed with the permanent OTHE key are published as releases.
+      # Builds without the key stay as a downloadable artifact on the workflow run.
       - name: Publish as a GitHub release
+        if: env.OTHE_KEYSTORE_PATH != '' && github.ref_name == 'main'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          tag="android-1.1.${GITHUB_RUN_NUMBER}"
-          gh release create "$tag" "${{ steps.apk.outputs.name }}" \
+          ver="1.1.${GITHUB_RUN_NUMBER}"
+          gh release create "v$ver" "${{ steps.apk.outputs.name }}" \
             --target "$GITHUB_SHA" \
-            --title "OTHE CRM Android 1.1.${GITHUB_RUN_NUMBER}" \
-            --notes "Built from ${GITHUB_REF_NAME} (${GITHUB_SHA::7}). Test on one phone before sending to all technicians." \
-            --prerelease
+            --title "OTHE CRM Android $ver" \
+            --notes "Live OTHE CRM technician app for Android, signed with the permanent OTHE key. Installs over the previous version."
