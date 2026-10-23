@@ -8,6 +8,10 @@ The technician app for the On Time Home Experts CRM (`com.othe.crm`). It opens t
 
 Get the latest APK from **[Releases](../../releases/latest)** → `OTHE-CRM-x.y.z.apk`.
 
+**Permanent download link (always the newest version)** — use this on the website:
+https://github.com/etai-web/othe-crm-app/releases/latest/download/OTHE-CRM.apk
+(This link only works while the repository is public.)
+
 - **Coming from v1.0.0:** delete the old OTHE CRM app first (one time only — v1.0.0 was signed
   with a different key), then install the new APK.
 - **Later updates:** install straight over the current app. No need to delete it.

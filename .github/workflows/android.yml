@@ -69,6 +69,9 @@ jobs:
           src=$(ls android/app/build/outputs/apk/release/*.apk | head -1)
           name="OTHE-CRM-1.1.${GITHUB_RUN_NUMBER}.apk"
           cp "$src" "$name"
+          # Fixed-name copy so the website can always link to
+          # https://github.com/etai-web/othe-crm-app/releases/latest/download/OTHE-CRM.apk
+          cp "$src" OTHE-CRM.apk
           echo "name=$name" >> "$GITHUB_OUTPUT"
           ls -la "$name"
 
@@ -86,7 +89,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           ver="1.1.${GITHUB_RUN_NUMBER}"
-          gh release create "v$ver" "${{ steps.apk.outputs.name }}" \
+          gh release create "v$ver" "${{ steps.apk.outputs.name }}" OTHE-CRM.apk \
             --target "$GITHUB_SHA" \
             --title "OTHE CRM Android $ver" \
             --notes "Live OTHE CRM technician app for Android, signed with the permanent OTHE key. Installs over the previous version."
