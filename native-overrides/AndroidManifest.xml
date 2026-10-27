@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -9,9 +10,14 @@
     <uses-permission android:name="android.permission.NFC" />
     <uses-feature android:name="android.hardware.nfc" android:required="false" />
 
-    <!-- Stripe Terminal requires location for card payments -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- Stripe Terminal requires precise location for card payments on EVERY Android version.
+         A library manifest declares ACCESS_FINE_LOCATION with maxSdkVersion="30"; without
+         tools:remove the merged APK drops the permission on Android 12+ and Tap to Pay fails
+         with "App is missing required permissions in its manifest". -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"
+        tools:remove="android:maxSdkVersion" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"
+        tools:remove="android:maxSdkVersion" />
 
     <!-- Bluetooth M2 card reader -->
     <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />

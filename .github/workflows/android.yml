@@ -63,6 +63,14 @@ jobs:
           grep -q "On Time Home Experts" signer.txt || { echo "::error::APK is not signed with the OTHE key"; exit 1; }
           echo "::notice::APK signed with the permanent OTHE key"
 
+      - name: Verify location permission applies to all Android versions
+        run: |
+          apk=$(ls android/app/build/outputs/apk/release/*.apk | head -1)
+          aapt=$(ls $ANDROID_HOME/build-tools/*/aapt | sort -V | tail -1)
+          "$aapt" dump permissions "$apk" | tee perms.txt
+          grep "ACCESS_FINE_LOCATION" perms.txt | grep -q "maxSdkVersion" && { echo "::error::ACCESS_FINE_LOCATION is limited by maxSdkVersion - Tap to Pay would fail on Android 12+"; exit 1; } || true
+          grep -q "ACCESS_FINE_LOCATION" perms.txt || { echo "::error::ACCESS_FINE_LOCATION missing"; exit 1; }
+
       - name: Collect APK
         id: apk
         run: |

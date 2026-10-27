@@ -18,6 +18,7 @@ https://github.com/etai-web/othe-crm-app/releases/latest/download/OTHE-CRM.apk
 
 | Version | Date | Notes |
 |---|---|---|
+| 1.1.x (next) | Oct 27, 2026 | Fixes Tap to Pay on Android 12+ ("App is missing required permissions in its manifest: ACCESS_FINE_LOCATION"): precise location is now requested on every Android version. |
 | 1.1.1 | Oct 2026 | No more "New tag scanned" after Tap to Pay; phone back button works; opens ontimehomexpertscrm.com. Signed with the permanent OTHE key. |
 | 1.0.0 | Sept 2026 | First version (source not saved; rebuilt in 1.1). |
 
